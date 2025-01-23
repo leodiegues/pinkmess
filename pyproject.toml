@@ -1,0 +1,24 @@
+[project]
+name = "pinkmess"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "leodiegues", email = "leodiegues@pm.me" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "platformdirs>=4.3.6",
+    "pydantic-settings>=2.7.1",
+]
+
+[project.scripts]
+pinkmess = "pinkmess.cli:entrypoint"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pyright]
+venv = ".venv"
+venvPath = "."
