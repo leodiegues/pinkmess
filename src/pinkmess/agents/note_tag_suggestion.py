@@ -14,7 +14,7 @@ note_tag_suggestion_agent = Agent(
         "Based on this markdown text, extract useful tags so "
         "I can search for this text later. The key point is "
         "that the I can add them to a markdown file YAML frontmatter. "
-        "Answer only with the tags in English as a list of tags "
+        "Answer only with the list of tags in the same language as the text "
         "separated by comma. Avoid spaces between commas. If the "
         "tag has more than one word, separate the words with hyphens."
     ),
