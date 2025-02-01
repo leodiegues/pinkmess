@@ -1,4 +1,4 @@
-# pinkmess
+# Pinkmess
 
 Pinkmess is a note-taking CLI tool that allows you to manage collections of markdown notes with AI-powered metadata generation capabilities.
 
@@ -19,7 +19,44 @@ It is a completely opinionated PKMS terminal manager for lazy people just like m
 ## Installation
 
 ```bash
+pip install pinkmess
+```
+
+Or install the latest version from the repository:
+
+```bash
 $ pip install git+https://github.com/leodiegues/pinkmess.git
+```
+
+## Quick Start
+
+Requirements:
+
+- Python 3.10+
+- OpenAI API key
+- Text editor (defaults to nvim)
+
+1. Set your OpenAI API key:
+```bash
+pinkmess config set-env OPENAI_API_KEY your_api_key_here
+```
+
+2. Create and set a collection:
+```bash
+pinkmess collection create ~/notes --name personal
+pinkmess collection set personal
+```
+
+3. Create and edit a note:
+```bash
+pinkmess note create
+pinkmess note edit
+```
+
+4. Generate metadata:
+```bash
+pinkmess note generate-metadata --key summary
+pinkmess note generate-metadata --key tags
 ```
 
 ## Basic Structure
@@ -194,3 +231,7 @@ pinkmess note generate-metadata --key tags
 ## License
 
 The project is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) license.
+
+---
+
+Happy note-taking! 🌸
