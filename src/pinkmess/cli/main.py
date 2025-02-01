@@ -33,6 +33,9 @@ class Pinkmess(BaseSettings):
 
 
 def entrypoint() -> None:
+    """
+    Entry point for the Pinkmess CLI application.
+    """
     CliApp.run(Pinkmess)
 
 

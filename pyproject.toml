@@ -4,21 +4,92 @@ version = "0.1.0"
 description = "A simple PKMS manager for lazy people."
 readme = "README.md"
 authors = [{ name = "leodiegues", email = "leodiegues@pm.me" }]
-requires-python = ">=3.13"
+requires-python = ">=3.10,<4.0"
 dependencies = [
     "platformdirs>=4.3.6",
     "pydantic-ai>=0.0.21",
-    "pydantic-settings>=2.7.1",
+    "pydantic-settings[toml]>=2.7.1",
     "python-frontmatter>=1.1.0",
     "rtoml>=0.12.0",
 ]
 
 [project.scripts]
-pinkmess = "pinkmess.cli.main:entrypoint"
+pinkmess = "pinkmess.__main__:entrypoint"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.ruff]
+fix = true
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "ASYNC", # flake8-async
+    "C4",    # flake8-comprehensions
+    "C90",   # McCabe cyclomatic complexity
+    "E501",  # Long lines
+    "EXE",   # flake8-executable
+    "F",     # Pyflakes
+    "INT",   # flake8-gettext
+    "PERF",  # Perflint
+    "PL",    # Pylint
+    "Q",     # flake8-quotes
+    "SIM",   # flake8-simplify
+    "SLOT",  # flake8-slots
+    "T10",   # flake8-debugger
+    "W",     # pycodestyle
+    "YTT",   # flake8-2020
+    "I",     # isort
+    # built-in shadowing
+    "A001", # builtin-variable-shadowing
+    "A002", # builtin-argument-shadowing
+    "A003", # builtin-attribute-shadowing
+    # docstring rules
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D209", # Closing triple quotes go to new line
+    "D205", # 1 blank line required between summary line and description
+    "D213", # summary lines must be positioned on the second physical line of the docstring
+    "D417", # undocumented-parameter
+    "D419", # undocumented-returns
+]
+ignore = [
+    "F401",    # unused-import
+    "PERF203", # `try`-`except` within a loop incurs performance overhead
+    "PERF401", # Use a list comprehension to create a transformed list
+    "PLR1714", # repeated-equality-comparison
+    "PLR5501", # collapsible-else-if
+    "PLW0603", # global-statement
+    "PLW1510", # subprocess-run-without-check
+    "PLW2901", # redefined-loop-name
+    "SIM108",  # if-else-block-instead-of-if-exp
+    "SIM115",  # open-file-with-context-handler
+    "SIM118",  # in-dict-keys
+]
+
+
+[tool.ruff.lint.isort]
+known-first-party = ["pinkmess"]
+lines-after-imports = 2
+
+[tool.ruff.lint.pylint]
+max-args = 10
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.ruff.lint.pycodestyle]
+max-doc-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"src/pinkmess/cli/*.py" = ["D102"]
+"src/pinkmess/config.py" = ["D102"]
 
 [tool.pyright]
 venv = ".venv"

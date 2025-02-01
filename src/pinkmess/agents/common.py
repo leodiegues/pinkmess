@@ -1,5 +1,7 @@
 from pydantic_ai import RunContext
+
 from pinkmess.note import Note
+
 
 def extract_note_text(ctx: RunContext[Note]) -> str:
     """

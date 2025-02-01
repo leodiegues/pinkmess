@@ -47,10 +47,9 @@ class CollectionCreateCommand(BaseModel):
                 print(f"Collection already exists: {new_collection_path}")
                 return
 
-            if self.name is not None:
-                if collection.name == self.name:
-                    print(f"Collection with name '{self.name}' already exists.")
-                    return
+            if self.name is not None and collection.name == self.name:
+                print(f"Collection with name '{self.name}' already exists.")
+                return
 
         settings.collections.append(new_collection)
         settings.save()

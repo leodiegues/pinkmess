@@ -13,6 +13,7 @@ from pydantic_settings.sources import (
 
 from pinkmess.collection import Collection
 
+
 DEFAULT_CONFIG_FILE = "config.toml"
 DEFAULT_CONFIG_DIR = user_config_path() / "pinkmess"
 DEFAULT_CONFIG_PATH = DEFAULT_CONFIG_DIR / DEFAULT_CONFIG_FILE
