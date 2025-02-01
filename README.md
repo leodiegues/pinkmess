@@ -5,7 +5,6 @@ Pinkmess is a note-taking CLI tool that allows you to manage collections of mark
 It is a completely opinionated PKMS terminal manager for lazy people just like me.
 
 > [!WARNING]
-> Personal Tool Notice
 >
 > This is a personal tool that I built for my own note-taking workflow and experimentation with AI-powered note organization. It is **NOT** intended for production use and comes with several important caveats:
 >
