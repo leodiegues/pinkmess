@@ -31,18 +31,30 @@ class CollectionCreateCommand(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     def cli_cmd(self) -> None:
-        print("Adding new root directory...")
-        self.path.mkdir(parents=True, exist_ok=True)
+        print("Creating new collection...")
+        new_collection_path = self.path.resolve().absolute()
+        new_collection_path.mkdir(parents=True, exist_ok=True)
         new_collection = Collection(
             index=len(settings.collections),
-            path=self.path,
+            path=new_collection_path,
             name=self.name,
             llm_model=self.llm_model or settings.default_llm_model,
             llm_settings=self.llm_settings or settings.default_llm_settings,
         )
+
+        for collection in settings.collections:
+            if collection.path == new_collection.path:
+                print(f"Collection already exists: {new_collection_path}")
+                return
+
+            if self.name is not None:
+                if collection.name == self.name:
+                    print(f"Collection with name '{self.name}' already exists.")
+                    return
+
         settings.collections.append(new_collection)
         settings.save()
-        print(f"Root directory successfully added: {self.path.absolute()}")
+        print(f"Collection successfully added: {self.path.resolve().absolute()}")
 
 
 class CollectionSetCommand(BaseModel):
