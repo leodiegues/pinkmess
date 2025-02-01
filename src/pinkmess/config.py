@@ -1,15 +1,16 @@
-from dataclasses import dataclass
-from pathlib import Path
 from typing import Any
-import rtoml
-import json
 
-from platformdirs import user_config_path, user_documents_path
+import rtoml
+from platformdirs import user_config_path
 from pydantic.fields import Field
 from pydantic_ai.models import KnownModelName
 from pydantic_ai.settings import ModelSettings
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic_settings.sources import PydanticBaseSettingsSource, TomlConfigSettingsSource
+from pydantic_settings.sources import (
+    PydanticBaseSettingsSource,
+    TomlConfigSettingsSource,
+)
+
 from pinkmess.collection import Collection
 
 DEFAULT_CONFIG_FILE = "config.toml"
@@ -60,9 +61,7 @@ class Settings(BaseSettings):
 
     def save(self) -> None:
         """Saves the settings."""
-        model_json = self.model_dump_json()
-        model_dict = json.loads(model_json)
-        DEFAULT_CONFIG_PATH.write_text(rtoml.dumps(model_dict, pretty=True))
+        DEFAULT_CONFIG_PATH.write_text(rtoml.dumps(self.model_dump(), pretty=True))
 
 
 settings = Settings()

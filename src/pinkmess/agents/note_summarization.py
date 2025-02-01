@@ -1,4 +1,5 @@
-from pydantic_ai import Agent, RunContext
+from pydantic_ai import Agent
+
 from pinkmess.agents.common import extract_note_text
 from pinkmess.config import settings
 from pinkmess.note import Note
@@ -13,5 +14,5 @@ note_summarization_agent = Agent(
         "language as the note that faithfully, conciselly and comprehensively "
         "summarizes it's content. The summary should be self-contained. "
         "Answer only with the summary paragraph, nothing else."
-    )
+    ),
 )
