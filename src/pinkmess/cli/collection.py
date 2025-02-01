@@ -86,6 +86,9 @@ class CollectionShowCurrentCommand(BaseModel):
     """
 
     def cli_cmd(self) -> None:
+        if settings.current_collection is None:
+            print("No current collection found.")
+            return
         print(f"Current collection: '{settings.current_collection.name}'")
 
 
@@ -140,8 +143,8 @@ class CollectionStatsCommand(BaseModel):
 
         print(f"Statistics of collection '{collection.name}':")
         print(f" -> Number of notes:  {n_notes}")
-        print(f" -> Created at:       {created_at.strftime("%Y-%m-%d %H:%M:%S")}")
-        print(f" -> Last modified at: {updated_at.strftime("%Y-%m-%d %H:%M:%S")}")
+        print(f" -> Created at:       {created_at.strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f" -> Last modified at: {updated_at.strftime('%Y-%m-%d %H:%M:%S')}")
 
 
 class CollectionCommands(BaseModel):

@@ -33,6 +33,15 @@ class Note(BaseModel):
         note_path.touch()
         return cls(path=note_path)
 
+    @classmethod
+    def from_path(cls, path: Path) -> Note:
+        """
+        Initializes a note from a file path.
+        """
+        note = cls(path=path)
+        note.load()
+        return note
+
     def load(self) -> None:
         """
         Loads the note content and metadata.

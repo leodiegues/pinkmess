@@ -16,6 +16,8 @@ from pinkmess.collection import Collection
 DEFAULT_CONFIG_FILE = "config.toml"
 DEFAULT_CONFIG_DIR = user_config_path() / "pinkmess"
 DEFAULT_CONFIG_PATH = DEFAULT_CONFIG_DIR / DEFAULT_CONFIG_FILE
+ENV_FILE_PATH = DEFAULT_CONFIG_DIR / ".env"
+ENV_FILE_PATH.touch()
 
 
 class Settings(BaseSettings):
@@ -27,11 +29,14 @@ class Settings(BaseSettings):
     current_collection_index: int = 0
     """The index of the current collection."""
 
-    default_llm_model: KnownModelName = "anthropic:claude-3-5-sonnet-latest"
+    default_llm_model: KnownModelName = "openai:gpt-4o-mini"
     """The default LLM model to be used."""
 
-    default_llm_settings: ModelSettings = Field(default_factory=ModelSettings)
+    default_llm_settings: ModelSettings = Field(default_factory=lambda: ModelSettings())
     """The default LLM settings to be used."""
+
+    editor: str = "nvim"
+    """The editor to be used."""
 
     model_config = SettingsConfigDict(toml_file=DEFAULT_CONFIG_PATH)
 
@@ -50,18 +55,34 @@ class Settings(BaseSettings):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
-        return (TomlConfigSettingsSource(settings_cls),)
+        return (TomlConfigSettingsSource(settings_cls), init_settings)
 
     @property
-    def current_collection(self) -> Collection:
+    def current_collection(self) -> Collection | None:
         """The current collection."""
         if not self.collections:
-            raise ValueError("No collections found.")
+            return None
         return self.collections[self.current_collection_index]
+
+    @property
+    def llm_model(self) -> KnownModelName:
+        """The LLM model to be used."""
+        if not self.current_collection:
+            return self.default_llm_model
+        return self.current_collection.llm_model
+
+    @property
+    def llm_settings(self) -> ModelSettings:
+        """The LLM settings to be used."""
+        if not self.current_collection:
+            return self.default_llm_settings
+        return self.current_collection.llm_settings
 
     def save(self) -> None:
         """Saves the settings."""
-        DEFAULT_CONFIG_PATH.write_text(rtoml.dumps(self.model_dump(), pretty=True))
+        DEFAULT_CONFIG_PATH.write_text(
+            rtoml.dumps(self.model_dump(), pretty=True, none_value=None)
+        )
 
 
 settings = Settings()

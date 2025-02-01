@@ -5,7 +5,8 @@ from pinkmess.config import settings
 from pinkmess.note import Note
 
 note_summarization_agent = Agent(
-    settings.current_collection.llm_model,
+    model=settings.llm_model,
+    model_settings=settings.llm_settings,
     deps_type=Note,
     result_type=str,
     tools=[extract_note_text],

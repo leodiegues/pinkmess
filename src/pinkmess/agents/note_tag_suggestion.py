@@ -5,8 +5,8 @@ from pinkmess.config import settings
 from pinkmess.note import Note
 
 note_tag_suggestion_agent = Agent(
-    model=settings.current_collection.llm_model,
-    model_settings=settings.current_collection.llm_settings,
+    model=settings.llm_model,
+    model_settings=settings.llm_settings,
     deps_type=Note,
     result_type=list[str],
     tools=[extract_note_text],
