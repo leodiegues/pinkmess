@@ -1,15 +1,18 @@
+from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel
 from pydantic_settings import (
     BaseSettings,
     CliApp,
+    CliExplicitFlag,
     CliPositionalArg,
     CliSubCommand,
     SettingsConfigDict,
 )
+from pydantic_settings.sources import CliMutuallyExclusiveGroup
 
-from pinkmess.config import settings
+from pinkmess.config import Collection, settings
 from pinkmess.note import Note
 
 
@@ -48,26 +51,52 @@ class NoteCommands(BaseModel):
     def cli_cmd(self) -> None:
         CliApp.run_subcommand(self)
 
-
-class ConfigSetCommand(BaseModel):
+class ConfigAddRootDirCommand(BaseModel):
     """
-    Sets configuration key and value.
+    Adds a new root directory.
     """
 
-    key: CliPositionalArg[str]
-    value: CliPositionalArg[str]
+    root_dir: CliPositionalArg[Path]
+    """The root directory to be added."""
+
+    alias: str
+    """An alias for the root directory."""
 
     def cli_cmd(self) -> None:
-        print(f"Changing `{self.key}` value...")
-        getattr(settings, self.key, self.value)
+        print(f"Adding new root directory: {self.root_dir}")
+        settings.root_dirs.append(Collection(len(settings.root_dirs), self.root_dir, self.alias))
+        print(f"Root directory successfully added: {self.root_dir}")
 
 
-class ConfigCommands(BaseModel):
+class ConfigSetRootDirCommand(BaseModel):
     """
-    Configuration commands.
+    Sets the current root directory.
     """
 
-    set: CliSubCommand[ConfigSetCommand]
+    alias: CliPositionalArg[str]
+    """The alias of the root directory to be set as current."""
+
+    def cli_cmd(self) -> None:
+        settings.set_current_root_dir_index_by_alias(self.alias)
+        print(f"Current root directory successfully set: {settings.root_dir}")
+
+class ConfigShowCommand(BaseModel):
+    """
+    Shows the current configuration.
+    """
+
+    def cli_cmd(self) -> None:
+        print(settings.model_dump_json(indent=2))
+
+
+class CollectionCommands(BaseModel):
+    """
+    Collection commands.
+    """
+
+    add: CliSubCommand[ConfigAddRootDirCommand]
+    set: CliSubCommand[ConfigSetRootDirCommand]
+    show: CliSubCommand[ConfigShowCommand]
 
     def cli_cmd(self) -> None:
         CliApp.run_subcommand(self)
@@ -78,7 +107,7 @@ class Pinkmess(BaseSettings):
     Pinkmess CLI application.
     """
 
-    config: CliSubCommand[ConfigCommands]
+    config: CliSubCommand[CollectionCommands]
     note: CliSubCommand[NoteCommands]
 
     model_config = SettingsConfigDict(

@@ -1,19 +1,20 @@
 [project]
 name = "pinkmess"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple PKMS manager for lazy people."
 readme = "README.md"
-authors = [
-    { name = "leodiegues", email = "leodiegues@pm.me" }
-]
+authors = [{ name = "leodiegues", email = "leodiegues@pm.me" }]
 requires-python = ">=3.13"
 dependencies = [
     "platformdirs>=4.3.6",
+    "pydantic-ai>=0.0.21",
     "pydantic-settings>=2.7.1",
+    "python-frontmatter>=1.1.0",
+    "rtoml>=0.12.0",
 ]
 
 [project.scripts]
-pinkmess = "pinkmess.cli:entrypoint"
+pinkmess = "pinkmess.cli.main:entrypoint"
 
 [build-system]
 requires = ["hatchling"]
@@ -22,3 +23,6 @@ build-backend = "hatchling.build"
 [tool.pyright]
 venv = ".venv"
 venvPath = "."
+
+[dependency-groups]
+dev = ["ruff>=0.9.4"]
