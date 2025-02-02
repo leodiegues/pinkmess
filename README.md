@@ -146,6 +146,21 @@ pinkmess note generate-metadata --key summary
 pinkmess note generate-metadata --path ~/notes/20230815123456.md --key tags
 ```
 
+### Duplicate Note
+```bash
+pinkmess note duplicate [--path PATH]
+```
+Creates a copy of the specified note (or last created note) with a new timestamp-based filename in the current collection.
+
+Example:
+```bash
+# Duplicate the last created note
+pinkmess note duplicate
+
+# Duplicate a specific note
+pinkmess note duplicate --path ~/notes/20230815123456.md
+```
+
 ### Show Last Created Note
 ```bash
 pinkmess note last

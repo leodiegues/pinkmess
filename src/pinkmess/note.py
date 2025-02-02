@@ -54,9 +54,7 @@ class Note(BaseModel):
         """
         Saves the note content and metadata.
         """
-        if self.content is None:
-            raise ValueError("Note content is empty.")
         if self.metadata is None:
-            self.path.write_text(self.content)
+            self.path.write_text(self.content or "")
         else:
             self.path.write_text(frontmatter.dumps(self.metadata))
