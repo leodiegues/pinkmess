@@ -37,27 +37,20 @@ Requirements:
 - Text editor (defaults to nvim)
 
 1. Set your OpenAI API key:
-```bash
-pinkmess config set-env OPENAI_API_KEY your_api_key_here
-```
+
+![Set your OpenAI API key](./docs/assets/gifs/quickstart/01-set-openai-api-key.gif)
 
 2. Create and set a collection:
-```bash
-pinkmess collection create ~/notes --name personal
-pinkmess collection set personal
-```
+
+![Create and set a collection](./docs/assets/gifs/quickstart/02-create-and-set-collection.gif)
 
 3. Create and edit a note:
-```bash
-pinkmess note create
-pinkmess note edit
-```
+
+![Create and edit a note](./docs/assets/gifs/quickstart/03-create-and-edit-note.gif)
 
 4. Generate metadata:
-```bash
-pinkmess note generate-metadata --key summary
-pinkmess note generate-metadata --key tags
-```
+
+![Generate metadata](./docs/assets/gifs/quickstart/04-generate-metadata.gif)
 
 ## 🏗️ Basic Structure
 
