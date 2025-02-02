@@ -104,7 +104,9 @@ class CollectionListCommand(BaseModel):
 
         print("Collections:")
         for collection in settings.collections:
-            print(f" -> {collection.name}: {collection.path.absolute()}")
+            is_current = collection.index == settings.current_collection_index
+            is_current_str = "(current)" if is_current else ""
+            print(f" -> {collection.name}: {collection.path.absolute()} {is_current_str}")
 
 
 class CollectionRemoveCommand(BaseModel):
@@ -161,6 +163,11 @@ class CollectionStatsCommand(BaseModel):
 
     def cli_cmd(self) -> None:
         collection = settings.current_collection
+
+        if collection is None:
+            print("No current collection found.")
+            return
+
         n_notes = len(list(collection.path.glob("*.md")))
         created_at = datetime.fromtimestamp(collection.path.stat().st_ctime)
         updated_at = datetime.fromtimestamp(collection.path.stat().st_mtime)
