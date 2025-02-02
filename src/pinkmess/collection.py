@@ -63,15 +63,9 @@ class Collection(BaseModel):
         Sets the last created note.
         """
         if self.last_created_note is None:
-            existing_notes = sorted(self.path.glob("*.md"), reverse=True)
+            self.update_last_created_note()
 
-            if existing_notes:
-                self.last_created_note = existing_notes[0]
-
-        if (
-            self.last_created_note is not None
-            and not self.last_created_note.is_relative_to(self.path)
-        ):
+        if self.last_created_note is not None and not self.last_created_note.is_relative_to(self.path):
             raise ValueError("Last created note is not in the collection.")
 
         return self
@@ -91,3 +85,11 @@ class Collection(BaseModel):
         if path is None:
             return None
         return path.resolve().absolute().as_posix()
+
+    def update_last_created_note(self) -> None:
+        """
+        Updates the last created note.
+        """
+        existing_notes = sorted(self.path.glob("*.md"), reverse=True)
+        if existing_notes:
+            self.last_created_note = existing_notes[0]

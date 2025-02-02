@@ -79,11 +79,16 @@ class Settings(BaseSettings):
             return self.default_llm_settings
         return self.current_collection.llm_settings
 
+    def get_collection_by_name(self, name: str) -> Collection | None:
+        """Returns a collection by name."""
+        for collection in self.collections:
+            if collection.name == name:
+                return collection
+        return None
+
     def save(self) -> None:
         """Saves the settings."""
-        DEFAULT_CONFIG_PATH.write_text(
-            rtoml.dumps(self.model_dump(), pretty=True, none_value=None)
-        )
+        DEFAULT_CONFIG_PATH.write_text(rtoml.dumps(self.model_dump(), pretty=True, none_value=None))
 
 
 settings = Settings()
