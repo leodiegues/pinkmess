@@ -1,3 +1,4 @@
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
@@ -129,6 +130,30 @@ class CollectionRemoveCommand(BaseModel):
             print(f"Collection '{self.name}' not found.")
 
 
+class CollectionOpenCommand(BaseModel):
+    """
+    Opens a collection.
+    """
+
+    name: str | None = None
+    """The name of the collection. If not provided, the current collection is opened."""
+
+    def cli_cmd(self) -> None:
+        collection = (
+            settings.get_collection_by_name(self.name) if self.name is not None else settings.current_collection
+        )
+
+        if collection is None:
+            print("No current collection found.")
+            return
+
+        print(f"Opening collection '{collection.name}' in {settings.editor}...")
+        subprocess.run([settings.editor, collection.path.as_posix()])
+        print(f"Collection '{collection.name}' successfully opened.")
+        print("Updating collection last created note...")
+        settings.collections[collection.index].update_last_created_note()
+
+
 class CollectionStatsCommand(BaseModel):
     """
     Shows the statistics of a collection.
@@ -152,28 +177,14 @@ class CollectionCommands(BaseModel):
     """
 
     create: CliSubCommand[CollectionCreateCommand]
-    """Creates a new collection."""
-
     set: CliSubCommand[CollectionSetCommand]
-    """Sets the current collection."""
-
     current: CliSubCommand[CollectionShowCurrentCommand]
-    """Shows the current collection."""
-
     list: CliSubCommand[CollectionListCommand]
-    """Lists the collections."""
-
     ls: CliSubCommand[CollectionListCommand]
-    """Alias for 'list'."""
-
     remove: CliSubCommand[CollectionRemoveCommand]
-    """Removes a collection."""
-
     rm: CliSubCommand[CollectionRemoveCommand]
-    """Alias for 'remove'."""
-
     stats: CliSubCommand[CollectionStatsCommand]
-    """Shows the statistics of a collection."""
+    open: CliSubCommand[CollectionOpenCommand]
 
     def cli_cmd(self) -> None:
         CliApp.run_subcommand(self)
