@@ -1,6 +1,6 @@
 [project]
 name = "pinkmess"
-version = "0.1.0"
+version = "0.2.0"
 description = "A simple PKMS manager for lazy people."
 readme = "README.md"
 authors = [{ name = "leodiegues", email = "leodiegues@pm.me" }]
