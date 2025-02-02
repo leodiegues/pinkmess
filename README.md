@@ -1,4 +1,4 @@
-# Pinkmess
+# Pinkmess 🌸
 
 Pinkmess is a note-taking CLI tool that allows you to manage collections of markdown notes with AI-powered metadata generation capabilities.
 
@@ -16,7 +16,7 @@ It is a completely opinionated PKMS terminal manager for lazy people just like m
 > - **Documentation**: May be incomplete or outdated
 >
 
-## Installation
+## 📥 Installation
 
 ```bash
 pip install pinkmess
@@ -28,7 +28,7 @@ Or install the latest version from the repository:
 $ pip install git+https://github.com/leodiegues/pinkmess.git
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 Requirements:
 
@@ -59,7 +59,7 @@ pinkmess note generate-metadata --key summary
 pinkmess note generate-metadata --key tags
 ```
 
-## Basic Structure
+## 🏗️ Basic Structure
 
 The CLI is organized into three main command groups:
 
@@ -67,7 +67,7 @@ The CLI is organized into three main command groups:
 - `note`: Handles individual notes
 - `config`: Manages application configuration
 
-## Collection Commands
+## 📁 Collection Commands
 
 ### Create a Collection
 ```bash
@@ -124,7 +124,7 @@ pinkmess collection stats
 ```
 Displays statistics about the current collection (number of notes, creation date, last modification).
 
-## Note Commands
+## 📝 Note Commands
 
 ### Create Note
 ```bash
@@ -159,7 +159,7 @@ pinkmess note last
 ```
 Shows the path of the most recently created note.
 
-## Config Commands
+## ⚙️ Config Commands
 
 ### Edit Configuration
 ```bash
@@ -184,7 +184,7 @@ Example:
 pinkmess config set-env OPENAI_API_KEY your_api_key_here
 ```
 
-## Configuration Details
+## 🛠️ Configuration Details
 
 The configuration is stored in TOML format at the user config directory:
 - Linux: `~/.config/pinkmess/config.toml`
@@ -200,7 +200,7 @@ Key configuration options include:
 
 Environment variables are stored in a `.env` file in the same directory.
 
-## Typical Workflow
+## 🔄 Typical Workflow
 
 1. Create a new collection:
 ```bash
@@ -228,7 +228,7 @@ pinkmess note generate-metadata --key summary
 pinkmess note generate-metadata --key tags
 ```
 
-## License
+## 📜 License
 
 The project is licensed under the [GPLv3](https://www.gnu.org/licenses/gpl-3.0.html) license.
 
