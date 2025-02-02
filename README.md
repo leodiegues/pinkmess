@@ -111,6 +111,21 @@ Example:
 pinkmess collection remove personal
 ```
 
+### Open Collection
+```bash
+pinkmess collection open [--name NAME]
+```
+Opens the specified collection (or current collection if no name provided) in your configured editor.
+
+Example:
+```bash
+# Open current collection
+pinkmess collection open
+
+# Open a specific collection
+pinkmess collection open --name personal
+```
+
 ### Show Collection Stats
 ```bash
 pinkmess collection stats
