@@ -24,8 +24,7 @@ jobs:
         run: uv python install ${{ matrix.python-version }}
       - name: Install the project
         run: uv sync --all-extras --dev
-      - uses: pre-commit/action@v3.0.1
-        with:
-          extra_args: --config .pre-commit-config.yaml
+      - name: Run Ruff
+        run: uv ruff check . --fix --exit-non-zero-on-fix
       - name: Minimize uv cache
         run: uv cache prune --ci
